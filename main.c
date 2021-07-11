@@ -32,6 +32,8 @@ int	main(int ac, char **av)
 	philos = malloc(data->num_of * sizeof(t_philo));
 	if (!philos)
 	{
+		free(data->forks);
+		free(data);
 		printf("Malloc failure\n");
 		return (1);
 	}

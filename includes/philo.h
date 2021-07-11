@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrhirha <hrhirha@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 15:48:35 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/06/27 20:28:41 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 12:05:49 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,16 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-#define DEF		"\033[0m"
-#define FOR_COL "\033[35m"
-#define EAT_COL "\033[34m"
-#define THI_COL "\033[33m"
-#define SLE_COL "\033[32m"
-#define DIE_COL "\033[31m"
+# define DEF		"\033[0m"
+# define FOR_COL	"\033[35m"
+# define EAT_COL	"\033[34m"
+# define THI_COL	"\033[33m"
+# define SLE_COL	"\033[32m"
+# define DIE_COL	"\033[31m"
 
-# define LFORK philo->idx
-# define RFORK (philo->idx + 1) % data->num_of
+# define MARGIN		1e4
 
-typedef struct	s_shared
+typedef struct s_shared
 {
 	size_t			num_of;
 	size_t			time_to_die;
@@ -38,9 +37,9 @@ typedef struct	s_shared
 	size_t			cur_time;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	*forks;
-}				t_shared;
+}t_shared;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	size_t		idx;
 	size_t		start;
@@ -50,7 +49,7 @@ typedef struct	s_philo
 	size_t		meals_count;
 	t_shared	*shared_data;
 	pthread_t	thr;
-}				t_philo;
+}t_philo;
 
 /* init */
 
@@ -63,10 +62,16 @@ int				ft_start_sim(t_philo *philos, t_shared *data);
 size_t			ft_strlen(char *s);
 size_t			stou(char *s);
 size_t			ft_mtime(void);
+int				ft_usleep(useconds_t microseconds);
+void			free_exit(t_shared **data, char *error);
 
 /* routine */
 
 void			*routine(void *arg);
-void			ake_forks(t_philo *philo);
+void			take_forks(t_philo *philo);
+
+/* monitor */
+
+void			*monitor(void *arg);
 
 #endif

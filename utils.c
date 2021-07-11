@@ -6,7 +6,7 @@
 /*   By: hrhirha <hrhirha@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:20:22 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/06/27 12:39:38 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 09:55:05 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(char *s)
 {
-	size_t len;
+	size_t	len;
 
 	len = 0;
 	while (s[len])
@@ -46,8 +46,28 @@ size_t	stou(char *s)
 
 size_t	ft_mtime(void)
 {
-	struct timeval tp;
+	struct timeval	tp;
 
 	gettimeofday(&tp, NULL);
 	return (tp.tv_sec * 1e3 + tp.tv_usec / 1e3);
+}
+
+int	ft_usleep(useconds_t microseconds)
+{
+	int		ret;
+	size_t	end_sleep;
+
+	end_sleep = ft_mtime() + microseconds / 1e3;
+	ret = usleep(microseconds - MARGIN);
+	while (ft_mtime() < end_sleep)
+		;
+	return (ret);
+}
+
+void	free_exit(t_shared **data, char *error)
+{
+	printf("%s\n", error);
+	free(*data);
+	*data = NULL;
+	exit(1);
 }

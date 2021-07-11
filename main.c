@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrhirha <hrhirha@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 17:17:50 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/06/27 13:30:58 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 16:59:01 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ int	main(int ac, char **av)
 	if (!data)
 	{
 		printf("Malloc failure\n");
-		exit (1);
+		return (1);
 	}
-	ft_init_shared(data, ac, av);
+	if (!ft_init_shared(data, ac, av))
+		return (1);
 	philos = malloc(data->num_of * sizeof(t_philo));
 	if (!philos)
 	{

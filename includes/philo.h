@@ -6,7 +6,7 @@
 /*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 15:48:35 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/07/11 12:42:30 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 16:22:56 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ typedef struct s_philo
 
 /* init */
 
-void			ft_init_mutex(t_shared *data);
-void			ft_init_shared(t_shared *data, int ac, char **av);
+int				ft_init_mutex(t_shared *data);
+int				ft_init_shared(t_shared *data, int ac, char **av);
 int				ft_start_sim(t_philo *philos, t_shared *data);
 
 /* utils */
@@ -63,7 +63,7 @@ size_t			ft_strlen(char *s);
 size_t			stou(char *s);
 size_t			ft_mtime(void);
 int				ft_usleep(useconds_t microseconds);
-void			free_exit(t_shared **data, char *error);
+void			free_data(t_shared **data, char *error);
 
 /* routine */
 

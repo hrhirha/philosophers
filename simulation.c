@@ -6,24 +6,26 @@
 /*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:11:33 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/07/11 13:37:20 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 16:58:26 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo.h"
 
-void	ft_init_mutex(t_shared *data)
+int	ft_init_mutex(t_shared *data)
 {
 	size_t	i;
 
 	if (pthread_mutex_init(&data->mutex, NULL) != 0)
 	{
-		free_exit(&data, "pthread_mutex_init failed");
+		free_data(&data, "pthread_mutex_init failed");
+		return (0);
 	}
 	data->forks = malloc(data->num_of * sizeof(pthread_mutex_t));
 	if (!data->forks)
 	{
-		free_exit(&data, "Malloc failure\n");
+		free_data(&data, "Malloc failure\n");
+		return (0);
 	}
 	i = 0;
 	while (i < data->num_of)
@@ -31,13 +33,15 @@ void	ft_init_mutex(t_shared *data)
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 		{
 			free(data->forks);
-			free_exit(&data, "pthread_mutex_init failed\n");
+			free_data(&data, "pthread_mutex_init failed\n");
+			return (0);
 		}
 		i++;
 	}
+	return (1);
 }
 
-void	ft_init_shared(t_shared *data, int ac, char **av)
+int	ft_init_shared(t_shared *data, int ac, char **av)
 {
 	data->num_of = stou(av[1]);
 	data->time_to_die = stou(av[2]);
@@ -47,18 +51,22 @@ void	ft_init_shared(t_shared *data, int ac, char **av)
 	if (ac == 6)
 	{
 		data->num_of_meals = stou(av[5]);
-		if (data->num_of_meals <= 0)
+		if (data->num_of_meals == 0)
 		{
-			free_exit(&data, "Invalid optional argument.");
+			free_data(&data, "Invalid optional argument.");
+			return (0);
 		}
 	}
 	if (data->num_of == 0 || data->time_to_die < 40
 		|| data->time_to_eat < 40 || data->time_to_sleep < 40)
 	{
-		free_exit(&data, "Invalid argument.");
+		free_data(&data, "Invalid argument.");
+		return (0);
 	}
 	data->cur_time = ft_mtime();
-	ft_init_mutex(data);
+	if (!ft_init_mutex(data))
+		return (0);
+	return (1);
 }
 
 void	ft_init_philo(t_philo *philos, int i, t_shared *data)
@@ -86,14 +94,9 @@ int	ft_start_sim(t_philo *philos, t_shared *data)
 		usleep(1e2);
 	}
 	pthread_create(&moni, NULL, &monitor, (void *)philos);
-	i = 0;
-	while (i < data->num_of)
-	{
-		pthread_join(philos[i].thr, NULL);
-		i++;
-	}
+	pthread_join(moni, NULL);
+	free(philos);
 	free(data->forks);
 	free(data);
-	free(philos);
 	return (0);
 }

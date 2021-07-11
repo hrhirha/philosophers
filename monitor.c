@@ -6,13 +6,13 @@
 /*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 11:39:09 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/07/11 12:14:44 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 16:48:27 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo.h"
 
-void	num_of_meals_exceeded(t_philo *philo, int i)
+int	num_of_meals_exceeded(t_philo *philo, int i)
 {
 	static size_t	all_done = 0;
 
@@ -25,11 +25,9 @@ void	num_of_meals_exceeded(t_philo *philo, int i)
 	{
 		pthread_mutex_lock(&philo[i].shared_data->mutex);
 		printf("Simulation has ended.\n");
-		free(philo[i].shared_data->forks);
-		free(philo[i].shared_data);
-		free(philo);
-		exit(1);
+		return (0);
 	}
+	return (1);
 }
 
 void	*monitor(void *arg)
@@ -46,12 +44,10 @@ void	*monitor(void *arg)
 			pthread_mutex_lock(&philo[i].shared_data->mutex);
 			printf("%s%ld %ld died\033[0m\n", DIE_COL,
 				ft_mtime() - philo[i].shared_data->cur_time, philo[i].idx + 1);
-			free(philo[i].shared_data->forks);
-			free(philo[i].shared_data);
-			free(philo);
-			exit(1);
+			break ;
 		}
-		num_of_meals_exceeded(philo, i);
+		if (!num_of_meals_exceeded(philo, i))
+			break ;
 		i = (i + 1) % philo[i].shared_data->num_of;
 		usleep(1e3);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrhirha <hrhirha@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:20:22 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/07/11 09:55:05 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 16:18:19 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,9 @@ int	ft_usleep(useconds_t microseconds)
 	return (ret);
 }
 
-void	free_exit(t_shared **data, char *error)
+void	free_data(t_shared **data, char *error)
 {
 	printf("%s\n", error);
 	free(*data);
 	*data = NULL;
-	exit(1);
 }

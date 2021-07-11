@@ -6,7 +6,7 @@
 /*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:11:33 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/07/11 12:13:56 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 13:37:20 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	ft_init_shared(t_shared *data, int ac, char **av)
 		data->num_of_meals = stou(av[5]);
 		if (data->num_of_meals <= 0)
 		{
-			free_exit(&data, "Invalid optional argument.\n");
+			free_exit(&data, "Invalid optional argument.");
 		}
 	}
-	if (!data->num_of || !data->time_to_die || !data->time_to_eat
-		|| !data->time_to_eat)
+	if (data->num_of == 0 || data->time_to_die < 40
+		|| data->time_to_eat < 40 || data->time_to_sleep < 40)
 	{
-		free_exit(&data, "Out of bound argument\n");
+		free_exit(&data, "Invalid argument.");
 	}
 	data->cur_time = ft_mtime();
 	ft_init_mutex(data);
@@ -83,7 +83,7 @@ int	ft_start_sim(t_philo *philos, t_shared *data)
 		ft_init_philo(philos, i, data);
 		pthread_create(&philos[i].thr, NULL, &routine, (void *)&philos[i]);
 		i++;
-		usleep(1e3);
+		usleep(1e2);
 	}
 	pthread_create(&moni, NULL, &monitor, (void *)philos);
 	i = 0;

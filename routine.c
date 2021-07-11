@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrhirha <hrhirha@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 20:25:11 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/07/11 09:52:46 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 12:25:53 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ void	*routine(void *arg)
 			pthread_mutex_unlock(&data->mutex);
 		}
 	}
+	return (NULL);
 }

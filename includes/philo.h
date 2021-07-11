@@ -6,7 +6,7 @@
 /*   By: hrhirha <hrhirha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 15:48:35 by hrhirha           #+#    #+#             */
-/*   Updated: 2021/07/11 12:05:49 by hrhirha          ###   ########.fr       */
+/*   Updated: 2021/07/11 12:42:30 by hrhirha          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define SLE_COL	"\033[32m"
 # define DIE_COL	"\033[31m"
 
-# define MARGIN		1e4
+# define MARGIN		10e3
 
 typedef struct s_shared
 {
